@@ -6,50 +6,102 @@
     <title>Sistema de Tickets</title>
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/tone@14.7.58/build/Tone.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilo para a animação de fade-in */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800">
 
-    <div class="container">
-        <h1 class="title">Sistema de Tickets</h1>
-        <p class="subtitle">Um espaço colaborativo para gerenciar problemas de Suporte de TI.</p>
-        <p class="user-info">Seu ID de Usuário: <span id="userIdDisplay">Carregando...</span></p>
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-700">Sistema de Abertura de Tickets</h1>
+            <p class="text-gray-500 mt-2">Crie e gerencie seus chamados de forma simples e eficiente.</p>
+        </header>
 
-        <form id="new-ticket-form">
-            <h2 class="text-xl font-semibold text-center mb-4">Abrir Novo Ticket</h2>
-            <div class="form-group">
-                <label for="title">Título do Problema</label>
-                <input type="text" id="title" name="title" required>
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Coluna do Formulário -->
+            <div class="lg:col-span-1 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Abrir Novo Ticket</h2>
+                <form id="ticket-form" class="space-y-4">
+                    <div>
+                        <label for="requester-name" class="block text-sm font-medium text-gray-600">Seu Nome</label>
+                        <input type="text" id="requester-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="ticket-subject" class="block text-sm font-medium text-gray-600">Assunto</label>
+                        <input type="text" id="ticket-subject" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                     <div>
+                        <label for="ticket-department" class="block text-sm font-medium text-gray-600">Departamento</label>
+                        <select id="ticket-department" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <option>TI / Suporte Técnico</option>
+                            <option>Recursos Humanos</option>
+                            <option>Financeiro</option>
+                            <option>Vendas</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ticket-priority" class="block text-sm font-medium text-gray-600">Prioridade</label>
+                        <select id="ticket-priority" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="Baixa">Baixa</option>
+                            <option value="Média">Média</option>
+                            <option value="Alta">Alta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ticket-description" class="block text-sm font-medium text-gray-600">Descrição do Problema</label>
+                        <textarea id="ticket-description" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+                        Enviar Ticket
+                    </button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="location">Sala / Escritório</label>
-                <input type="text" id="location" name="location" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Descrição</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="cta-button">Enviar Ticket</button>
-        </form>
 
-        <div class="tickets-list" id="active-tickets-list">
-            <h2 class="text-xl font-semibold text-center mb-4">Tickets Abertos</h2>
-            <p id="loading-active" class="loading-text">Carregando tickets...</p>
-        </div>
+            <!-- Coluna da Lista de Tickets -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Tickets Abertos</h2>
+                <div id="ticket-list" class="space-y-4">
+                    <!-- Tickets serão inseridos aqui via JavaScript -->
+                    <p id="no-tickets-message" class="text-gray-500 text-center py-8">Nenhum ticket aberto no momento.</p>
+                </div>
+            </div>
+        </main>
+    </div>
 
-        <div class="tickets-list mt-8 border-t border-solid border-gray-600 pt-8" id="archived-tickets-list">
-            <h2 class="text-xl font-semibold text-center mb-4">Tickets Arquivados</h2>
-            <p id="loading-archived" class="loading-text">Carregando histórico...</p>
+    <!-- Modal para Detalhes do Ticket -->
+    <div id="ticket-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4">
+        <div id="modal-content" class="bg-white rounded-lg shadow-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto fade-in">
+            <!-- Conteúdo do modal será inserido aqui -->
         </div>
     </div>
-    
-    <!-- Notification Container -->
-    <div id="notification-container"></div>
 
-    <script type="module" src="script.js"></script>
-    
+    <script src="/js/script.js"></script>
 </body>
 </html>
+
