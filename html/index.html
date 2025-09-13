@@ -12,6 +12,44 @@
     <script src="https://unpkg.com/tone@14.7.58/build/Tone.js"></script>
 </head>
 <body>
+
+    <div class="container">
+        <h1 class="title">Sistema de Tickets</h1>
+        <p class="subtitle">Um espaço colaborativo para gerenciar problemas de Suporte de TI.</p>
+        <p class="user-info">Seu ID de Usuário: <span id="userIdDisplay">Carregando...</span></p>
+
+        <form id="new-ticket-form">
+            <h2 class="text-xl font-semibold text-center mb-4">Abrir Novo Ticket</h2>
+            <div class="form-group">
+                <label for="title">Título do Problema</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Sala / Escritório</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Descrição</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="cta-button">Enviar Ticket</button>
+        </form>
+
+        <div class="tickets-list" id="active-tickets-list">
+            <h2 class="text-xl font-semibold text-center mb-4">Tickets Abertos</h2>
+            <p id="loading-active" class="loading-text">Carregando tickets...</p>
+        </div>
+
+        <div class="tickets-list mt-8 border-t border-solid border-gray-600 pt-8" id="archived-tickets-list">
+            <h2 class="text-xl font-semibold text-center mb-4">Tickets Arquivados</h2>
+            <p id="loading-archived" class="loading-text">Carregando histórico...</p>
+        </div>
+    </div>
+    
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <script type="module" src="script.js"></script>
     
 </body>
 </html>
