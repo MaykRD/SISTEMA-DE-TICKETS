@@ -30,7 +30,7 @@
                         <label for="ticket-subject" class="block text-sm font-medium text-gray-600">Assunto</label>
                         <input type="text" id="ticket-subject" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
-                     <div>
+                    <div>
                         <label for="ticket-department" class="block text-sm font-medium text-gray-600">Departamento</label>
                         <select id="ticket-department" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             <option>TI / Suporte Técnico</option>
@@ -57,12 +57,24 @@
                 </form>
             </div>
 
-            <!-- Coluna da Lista de Tickets -->
-            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Tickets Abertos</h2>
-                <div id="ticket-list" class="space-y-4">
-                    <!-- Tickets serão inseridos aqui via JavaScript -->
-                    <p id="no-tickets-message" class="text-gray-500 text-center py-8">Nenhum ticket aberto no momento.</p>
+            <!-- Colunas da Lista de Tickets -->
+            <div class="lg:col-span-2 flex flex-col gap-8">
+                <!-- Tickets Abertos -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex-1">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Tickets Abertos</h2>
+                    <div id="open-ticket-list" class="space-y-4">
+                        <!-- Tickets abertos serão inseridos aqui via JavaScript -->
+                        <p id="no-open-tickets-message" class="text-gray-500 text-center py-8">Nenhum ticket aberto no momento.</p>
+                    </div>
+                </div>
+
+                <!-- Tickets Arquivados -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex-1">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Tickets Arquivados</h2>
+                    <div id="archived-ticket-list" class="space-y-4">
+                        <!-- Tickets arquivados serão inseridos aqui via JavaScript -->
+                        <p id="no-archived-tickets-message" class="text-gray-500 text-center py-8">Nenhum ticket arquivado no momento.</p>
+                    </div>
                 </div>
             </div>
         </main>
